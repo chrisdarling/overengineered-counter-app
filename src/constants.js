@@ -1,0 +1,1 @@
+export const CLIENT_BUILD_ENTRY_POINT = '/build/public'
