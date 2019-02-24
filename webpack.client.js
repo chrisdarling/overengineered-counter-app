@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 
 const clientPath = path.resolve(__dirname, 'build/public');
 const pathsToClean = [clientPath]
@@ -13,12 +14,18 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(pathsToClean, {}),
         new webpack.HashedModuleIdsPlugin(),
-        new ManifestPlugin({ fileName: 'manifest.json' })
+        new WorkboxPlugin.GenerateSW({
+            // these options encourage the ServiceWorkers to get in there fast 
+            // and not allow any straggling "old" SWs to hang around
+            clientsClaim: true,
+            skipWaiting: true
+        }),
+        new ManifestPlugin({ fileName: 'manifest.json' }),
     ],
     output: {
         filename: '[name].[contenthash].js',
         path: clientPath,
-        publicPath: '/build/public'
+        publicPath: '/'
     },
     optimization: {
         splitChunks: {

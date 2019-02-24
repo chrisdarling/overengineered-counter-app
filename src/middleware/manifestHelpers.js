@@ -1,6 +1,5 @@
 import { readFileAsync } from '../helpers'
 import paths from '../config/paths'
-import { CLIENT_BUILD_ENTRY_POINT } from '../constants'
 
 let manifest;
 const options = {}
@@ -26,7 +25,6 @@ export const getSources = () => {
 export const getJavaScriptFiles = (sources) => {
     return sources
         .filter((file) => file.match(/\.js$/))
-        .map(file => file.replace(CLIENT_BUILD_ENTRY_POINT, ''))
 }
 
 const manifestHelpers = () => {

@@ -5,9 +5,6 @@ import { Helmet } from 'react-helmet'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import App from './client/App'
 
-import paths from './config/paths'
-import { readFileAsync } from './helpers'
-
 function createHTML(req, res) {
     const sheet = new ServerStyleSheet()
     const context = {}
@@ -25,6 +22,10 @@ function createHTML(req, res) {
 
     const { JSFiles = [] } = res.locals;
 
+    const filteredFiles = JSFiles
+        .filter(file => file !== '/service-worker.js')
+        .filter(file => !file.startsWith('/precache'))
+
     return `
         <!doctype html>
         <html>
@@ -38,34 +39,13 @@ function createHTML(req, res) {
                 <div id="root">
                     ${content}
                 </div>
-                ${JSFiles.map(fileName => `<script src="${fileName}"></script>`)}
+                ${filteredFiles.map(fileName => `<script src="${fileName}"></script>`)}
             </body>
         </html>
     `
 }
 
 export default () => async (req, res) => {
-    const { JSFiles = [] } = res.locals;
-
-    for (let i = 0; i < JSFiles.length; i++) {
-        const stream = res.push(`/${JSFiles[i]}`, {
-            status: 200,
-            method: 'GET',
-            request: {
-              accept: '*/*'
-            },
-            response: {
-              'content-type': 'application/javascript'
-            }
-        })
-
-        stream.on('error', err => {})
-
-        const fileData = await readFileAsync(`${paths.clientBuild}/${JSFiles[i]}`)
-    
-        stream.end(fileData)
-    }
-
     const html = createHTML(req, res)
     res.end(html)
 }

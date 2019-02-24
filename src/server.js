@@ -2,6 +2,7 @@ import 'babel-polyfill'
 import express from 'express'
 import spdy from 'spdy'
 import bodyParser from 'body-parser'
+import compression from 'compression'
 import paths from './config/paths'
 import { readFileAsync } from './helpers'
 import manifestHelpers from './middleware/manifestHelpers'
@@ -9,6 +10,8 @@ import renderer from './renderer'
 
 const app = express()
 const PORT = process.env.PORT || 4000
+
+app.use(compression())
 
 app.use(bodyParser.json())
 app.use(express.static('build/public'))

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Switch, Route } from 'react-router'
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
-import CounterPage from './pages/CounterPage'
+import CounterPage from './pages/CounterPage/index.js'
 
 const theme = {
     color1: '#87B1B1',
