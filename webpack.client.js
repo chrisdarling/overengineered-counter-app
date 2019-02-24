@@ -8,7 +8,7 @@ const clientPath = path.resolve(__dirname, 'build/public');
 const pathsToClean = [clientPath]
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     target: 'web',
     entry: './src/client/client.js',
     plugins: [

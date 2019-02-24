@@ -3,7 +3,6 @@ import styled from 'styled-components'
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100rem;
     align-items: center;
 
     .counter-actions {
@@ -13,31 +12,29 @@ export const Container = styled.div`
     }
 `
 
-export const Count = styled.h1`
-    font-size: 10rem;
+export const Count = styled.div`
+    font-size: 7.5rem;
     align-self: center;
 `
 
 export const ResetButton = styled.button`
     background: ${props => props.theme.color4};
     color: ${props => props.theme.color3};
-    width: 25rem;
-    height: 6.2rem;
-    font-size: 5rem;
+    width: 10rem;
+    font-size: 2rem;
     border: none;
 `
 
 export const CircleButton = styled.button`
     display:block;
-    height: 10rem;
-    width: 10rem;
+    height: 5rem;
+    width: 5rem;
     border-radius: 50%;
  
-    outline: none;
     background: ${props => props.theme.color3};
 
     span {
-        font-size: 5rem;
+        font-size: 3rem;
         color: ${props => props.theme.color1};
     }
 `

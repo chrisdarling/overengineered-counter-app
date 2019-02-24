@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Helmet } from 'react-helmet'
 import { Container, Count, ResetButton, CircleButton } from './styles'
 
-
 export default class CounterPage extends Component  {
     state = {
         count: 0,

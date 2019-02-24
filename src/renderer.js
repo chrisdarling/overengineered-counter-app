@@ -32,6 +32,7 @@ function createHTML(req, res) {
             <head>
                 ${helmet.meta.toString()}
                 ${helmet.title.toString()}
+                <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500" rel="stylesheet">
                 ${styleTags}
             </head>
             <body>
