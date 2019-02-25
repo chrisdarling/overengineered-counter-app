@@ -20,6 +20,17 @@ const start = async () => {
 
     clientConfig.output.hotUpdateMainFilename = '[hash].hot-update.json';
     clientConfig.output.hotUpdateChunkFilename = '[hash].hot-update.js';
+
+    const publicPath = clientConfig.output.publicPath;
+
+    clientConfig.output.publicPath = [`http://localhost:${PORT}`, publicPath]
+        .join('/')
+        .replace(/([^:+])\/+/g, '$1/');
+
+    serverConfig.output.publicPath = [`http://localhost:${PORT}`, publicPath]
+        .join('/')
+        .replace(/([^:+])\/+/g, '$1/');
+
     const multiCompiler = webpack([clientConfig, serverConfig])
 
     const clientCompiler = multiCompiler.compilers[0]
@@ -76,7 +87,7 @@ const start = async () => {
 
     const script = nodemon({
         script: `${paths.serverBuild}/bundle.js`,
-        //ignore: ['scripts', 'config', './*.*']
+        ignore: ['scripts', 'config', './*.*', 'build']
     })
 
     script.on('restart', () => {
