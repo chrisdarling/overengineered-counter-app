@@ -29,18 +29,27 @@ async function createServerOptions() {
 }
 
 async function main() {
-    const { key, cert } = await createServerOptions()
-    const options = { key, cert }
-    const server = spdy.createServer(options, app)
-    
-    server.listen(PORT, (err) => {
-        if (err) {
-            console.error(err)
-            return -1
-        }
-        console.log(`App running 🌏 on port ${PORT} 🎉`)
-    })
-    
+    if (process.env.NODE_ENV === 'production') {
+        const { key, cert } = await createServerOptions()
+        const options = { key, cert }
+        const server = spdy.createServer(options, app)
+        
+        server.listen(PORT, (err) => {
+            if (err) {
+                console.error(err)
+                return -1
+            }
+            console.log(`App running 🌏 on {PORT} 🎉`)
+        })
+    } else {
+        app.listen(PORT, (err) => {
+            if (err) {
+                console.error(err)
+                return -1
+            }
+            console.log(`App running 🌏 at: http://localhost:${PORT} 🎉`)
+        })
+    }
 }
     
 main().catch(err => console.error('An Error Occured:', err))

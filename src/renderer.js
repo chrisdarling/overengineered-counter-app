@@ -25,6 +25,8 @@ function createHTML(req, res) {
     const filteredFiles = JSFiles
         .filter(file => file !== '/service-worker.js')
         .filter(file => !file.startsWith('/precache'))
+        .map(fileName => `<script src="${fileName}"></script>`)
+        .join('')
 
     return `
         <!doctype html>
@@ -32,7 +34,6 @@ function createHTML(req, res) {
             <head>
                 ${helmet.meta.toString()}
                 ${helmet.title.toString()}
-                <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500" rel="stylesheet">
                 ${styleTags}
             </head>
             <body>
@@ -40,7 +41,7 @@ function createHTML(req, res) {
                 <div id="root">
                     ${content}
                 </div>
-                ${filteredFiles.map(fileName => `<script src="${fileName}"></script>`)}
+                ${filteredFiles}
             </body>
         </html>
     `

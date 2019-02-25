@@ -10,6 +10,12 @@ ReactDOM.hydrate(
     document.getElementById('root')
 )
 
+if (process.env.NODE_ENV === 'development') {
+    if (module.hot) {
+        module.hot.accept();
+    }
+}
+
 if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js').then(registration => {

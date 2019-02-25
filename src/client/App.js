@@ -16,8 +16,14 @@ const theme = {
 const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
-        font-display: sans-serif; 
-        font-family: 'Ubuntu', sans-serif;
+    }
+
+
+    @font-face {
+        font-family: 'Ubuntu';
+        font-display: swap;
+        src: url('/assets/fonts/Ubuntu-Light.ttf') format('truetype');
+        font-weight: normal;
     }
     
     html, body {
@@ -29,6 +35,8 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0; 
         overflow: hidden;
+
+        font-family: 'Ubuntu', sans-serif;
     }
 
     html {

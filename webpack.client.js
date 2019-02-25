@@ -1,19 +1,20 @@
-const path = require('path')
+const paths = require('./config/paths')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
+const WriteFileWebpackPlugin = require('write-file-webpack-plugin')
 
-const clientPath = path.resolve(__dirname, 'build/public');
-const pathsToClean = [clientPath]
+const pathsToClean = [paths.clientBuild]
 
 module.exports = {
     mode: 'development',
     target: 'web',
-    entry: './src/client/client.js',
+    entry: paths.clientEntry,
     plugins: [
         new CleanWebpackPlugin(pathsToClean, {}),
         new webpack.HashedModuleIdsPlugin(),
+        new WriteFileWebpackPlugin(),
         new WorkboxPlugin.GenerateSW({
             // these options encourage the ServiceWorkers to get in there fast 
             // and not allow any straggling "old" SWs to hang around
@@ -21,10 +22,11 @@ module.exports = {
             skipWaiting: true
         }),
         new ManifestPlugin({ fileName: 'manifest.json' }),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     output: {
-        filename: '[name].[contenthash].js',
-        path: clientPath,
+        filename: '[name].[hash].js',
+        path: paths.clientBuild,
         publicPath: '/'
     },
     optimization: {

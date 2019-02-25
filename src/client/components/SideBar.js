@@ -29,7 +29,7 @@ const Title = styled.h2`
 export default function SideBar(props) {
     return (
         <SideBarContainer>
-            <Title>Welcome to the Over Engineered Counter App 🔥🔥🔥</Title>
+            <Title>Welcome to the Over Counter App 🔥🔥🔥</Title>
         </SideBarContainer>
     )
 }

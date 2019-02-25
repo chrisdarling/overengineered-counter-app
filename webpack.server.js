@@ -1,14 +1,19 @@
-const path = require('path')
+const paths = require('./config/paths')
+const webpack = require('webpack')
 const webpackNodeExternals = require('webpack-node-externals')
 
 module.exports = {
+    name: 'server',
     mode: 'development',
     target: 'node',
-    entry: './src/server.js',
+    entry: paths.serverEntry,
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
     devtool: 'inline-source-map',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'build'),
+        path: paths.serverBuild,
         publicPath: '/build'
     },
     module: {
