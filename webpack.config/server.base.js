@@ -1,15 +1,14 @@
-const paths = require('./config/paths')
-const webpack = require('webpack')
+const paths = require('../config/paths')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpackNodeExternals = require('webpack-node-externals')
+
+const pathsToClean = [paths.serverBuild]
 
 module.exports = {
     name: 'server',
-    mode: 'development',
     target: 'node',
     entry: paths.serverEntry,
-    plugins: [
-        new webpack.HotModuleReplacementPlugin()
-    ],
+    plugins: [new CleanWebpackPlugin(pathsToClean, {}),],
     devtool: 'inline-source-map',
     output: {
         filename: 'bundle.js',

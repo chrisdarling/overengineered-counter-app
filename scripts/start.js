@@ -5,8 +5,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const paths = require('../config/paths')
-const clientConfig = require('../webpack.client')
-const serverConfig = require('../webpack.server')
+const clientConfig = require('../webpack.config/client.dev')
+const serverConfig = require('../webpack.config/server.dev')
 const { compilerPromise } = require('../config/utils')
 
 const app = express()
