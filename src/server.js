@@ -1,10 +1,7 @@
 import 'babel-polyfill'
 import express from 'express'
-import spdy from 'spdy'
 import bodyParser from 'body-parser'
 import compression from 'compression'
-import paths from './config/paths'
-import { readFileAsync } from './helpers'
 import manifestHelpers from './middleware/manifestHelpers'
 import renderer from './renderer'
 
@@ -14,43 +11,21 @@ const PORT = process.env.PORT || 4000
 app.use(compression())
 
 app.use(bodyParser.json())
-app.use(express.static('build/public'))
+
+// allow serverless function (zeit now, aws lamda, etc) to serve
+// static files in production 
+if (process.env.NODE_ENV === 'development') {
+    app.use(express.static('build/public'))
+}
 
 app.use(manifestHelpers())
 app.get('*', renderer())
 
-async function createServerOptions() {
-    const files = [
-        readFileAsync(paths.key, 'utf8'),
-        readFileAsync(paths.cert, 'utf8')
-    ]
-    const [key, cert] = await Promise.all(files)
-    return { key, cert }
-}
-
-async function main() {
-    if (process.env.NODE_ENV === 'production') {
-        const { key, cert } = await createServerOptions()
-        const options = { key, cert }
-        const server = spdy.createServer(options, app)
-        
-        server.listen(PORT, (err) => {
-            if (err) {
-                console.error(err)
-                return -1
-            }
-            console.log(`App running 🌏 on {PORT} 🎉`)
-        })
-    } else {
-        app.listen(PORT, (err) => {
-            if (err) {
-                console.error(err)
-                return -1
-            }
-            console.log(`App running 🌏 at: http://localhost:${PORT} 🎉`)
-        })
+app.listen(PORT, (err) => {
+    if (err) {
+        console.error(err)
+        return -1
     }
-}
-    
-main().catch(err => console.error('An Error Occured:', err))
+    console.log(`App running 🌏 at: http://localhost:${PORT} 🎉`)
+})
 
