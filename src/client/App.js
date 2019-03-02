@@ -6,11 +6,12 @@ import Page from './components/Page'
 import SideBar from './components/SideBar'
 
 const theme = {
-    color1: '#87B1B1',
-    color2: '#C7D8D4',
-    color3: '#DBE5E2',
-    color4: '#DB817D',
-    pageBreak: '780px'
+    color1: '#E2E2E2',
+    color2: '#DB817D',
+    color3: '#232D32',
+    color4: '#131c25',
+    background: '#f6f9fc',
+    pageBreak: '780px',
 }
 
 const GlobalStyle = createGlobalStyle`
@@ -28,13 +29,10 @@ const GlobalStyle = createGlobalStyle`
     
     html, body {
         width: 100%;
-        height: 100%;
-        min-height: 100%;
         min-width: 100%;
         box-sizing: border-box;
         margin: 0;
         padding: 0; 
-        overflow: hidden;
 
         font-family: 'Ubuntu', sans-serif;
     }
@@ -46,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         line-height: 2;
-        background: ${`linear-gradient(${theme.color1},${theme.color2})`};
+        background: ${theme.background}
         color: ${theme.color3};
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -54,9 +52,6 @@ const GlobalStyle = createGlobalStyle`
 
     #root {
         width: 100%;
-        height: 100%;
-        min-height: 100%;
-        overflow: hidden;
     }
 `
 

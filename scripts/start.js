@@ -42,7 +42,7 @@ const start = async () => {
     const watchOptions = {
         // poll: true,
         ignored: /node_modules/,
-        //stats: clientConfig.stats,
+        stats: clientConfig.stats,
     }
 
     app.use((req, res, next) => {
@@ -52,6 +52,7 @@ const start = async () => {
 
     app.use(webpackDevMiddleware(clientCompiler, {
         publicPath: clientConfig.output.publicPath,
+        stats: clientConfig.stats,
         watchOptions
     }))
 

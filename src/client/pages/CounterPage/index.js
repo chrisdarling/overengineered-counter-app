@@ -1,46 +1,60 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { Container, Count, ResetButton, CircleButton } from './styles'
+import Counter from './Counter';
+import { CounterGrid } from './styles'
 
-export default class CounterPage extends Component  {
-    state = {
-        count: 0,
+import {
+    countersSelector,
+    decrementCounter,
+    resetCounter,
+    incrementCounter,
+} from '../../modules/count'
+
+@connect(state => ({ 
+    counters: countersSelector(state)
+ }), {
+    decrementCounter,
+    incrementCounter,
+    resetCounter,
+ })
+export default class CounterPage extends Component  {  
+    static propTypes = {
+        decrementCounter: PropTypes.func.isRequired,
+        incrementCounter: PropTypes.func.isRequired,
+        resetCounter: PropTypes.func.isRequired,
+        counters: PropTypes.array,
     }
 
-    handleChange = () => {
-        this.setState(state => ({ count: state.count + 1 }))
-    }
-
-    handleReset = () => {
-        this.setState({ count: 0 })
+    static defaultProps = {
+        counters: []
     }
 
     head() {
         return (
             <Helmet>
-                <title>Welcome Home 🏠</title>
+                <title>Over Engineered Counter App</title>
             </Helmet>
         )
     }
 
     render() {
+        const { counters, decrementCounter, incrementCounter, resetCounter } = this.props;
         return (
-            <Container>
-                    {this.head()}
-                    <div>
-                        <ResetButton onClick={this.handleReset}>
-                            Reset
-                        </ResetButton>
-                    </div>
-                    <Count> 
-                        {this.state.count}
-                    </Count>
-                    <div>
-                        <CircleButton onClick={this.handleChange}>
-                            <span>&#43;</span>
-                        </CircleButton>
-                    </div>
-            </Container>
+            <CounterGrid>
+                {this.head()}
+                {counters.map((counter, i) => (
+                    <Counter
+                        key={i} 
+                        index={i} 
+                        {...counter}
+                        onIncrement={incrementCounter}
+                        onDecrement={decrementCounter}
+                        onReset={resetCounter}
+                    />
+                ))}
+            </CounterGrid>
         )
     }
 }

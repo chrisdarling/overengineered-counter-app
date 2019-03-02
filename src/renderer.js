@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router'
+import { Provider } from 'react-redux'
+import configureStore from './client/configureStore'
 import { Helmet } from 'react-helmet'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 import App from './client/App'
@@ -8,13 +10,28 @@ import App from './client/App'
 function createHTML(req, res) {
     const sheet = new ServerStyleSheet()
     const context = {}
+    const initialState = { 
+        count: { 
+            counters: [
+                { count: 0 },
+                { count: 0 },
+            ],
+        },
+    }
+    const store = configureStore({
+        initialState,
+    })
     const content = ReactDOMServer.renderToString(
-        <StaticRouter location={req.url} context={context}>
-            <StyleSheetManager sheet={sheet.instance}>
-                <App />
-            </StyleSheetManager>
-        </StaticRouter>
+        <Provider store={store}>
+            <StaticRouter location={req.url} context={context}>
+                <StyleSheetManager sheet={sheet.instance}>
+                    <App />
+                </StyleSheetManager>
+            </StaticRouter>
+        </Provider>
     )
+
+    const preloadedState = store.getState()
 
     const styleTags = sheet.getStyleTags()
 
@@ -41,6 +58,12 @@ function createHTML(req, res) {
                 <div id="root">
                     ${content}
                 </div>
+                <script>
+                    window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(
+                        /</g,
+                        '\\u003c'
+                      )}
+                </script>
                 ${filteredFiles}
             </body>
         </html>

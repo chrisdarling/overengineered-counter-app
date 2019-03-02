@@ -7,7 +7,6 @@ const PageContainer = styled.div`
     flex-direction: column;
     padding: 2rem;
     width: 100%;
-    overflow-y: auto;
 `
 
 export default function Page({ children }) {
