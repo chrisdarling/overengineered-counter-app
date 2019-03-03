@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const SideBarContainer = styled.div`
     width: 50rem;
     max-width: 30rem;
-    color: ${props => props.theme.color3};
+    color: ${props => props.theme.textColor};
 
     @media (max-width: ${props => props.theme.pageBreak}) {
         width: 100%;
@@ -16,6 +16,11 @@ export const SideBarContent = styled.div`
     top: 0;
     position: sticky;
     padding: 2rem;
+
+    .action-container {
+        display: flex;
+        justify-content: space-between;
+    }
 `
 
 export const Title = styled.h2`
@@ -31,10 +36,10 @@ export const Title = styled.h2`
 
 export const AddButton = styled.button`
     display: flex;
-    background: ${props => props.theme.color2};
-    color: ${props => props.theme.color1};
-    padding: 1rem;
-    font-size: 2rem;
+    background: ${props => props.theme.dangerColor};
+    color: ${props => props.theme.textColor};
+    padding: .5rem;
+    font-size: 1.5rem;
     border-radius: 0.2rem;
     cursor: pointer;
     border: none;

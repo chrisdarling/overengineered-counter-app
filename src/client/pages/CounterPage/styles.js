@@ -11,7 +11,7 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    border: 1px solid #d3d3d3;
+    border: 1px solid ${props => props.theme.border};
     box-shadow: 0 2px 8px rgba(0,0,0,.1);
     
     .counter-actions {
@@ -26,8 +26,8 @@ export const Count = styled.div`
 `
 
 export const ResetButton = styled.button`
-    background: ${props => props.theme.color2};
-    color: ${props => props.theme.color1};
+    background: ${props => props.theme.dangerColor};
+    color: ${props => props.theme.textColor};
     font-size: 2rem;
     padding: .5rem;
     border-radius: 0.2rem;
@@ -43,10 +43,10 @@ export const CircleButton = styled.button`
     margin-right: 1rem;
     cursor: pointer;
  
-    background: ${props => props.theme.color1};
+    background: ${props => props.theme.grayColor};
 
     span {
         font-size: 3rem;
-        color: ${props => props.theme.color3};
+        color: ${props => props.theme.textColor};
     }
 `
